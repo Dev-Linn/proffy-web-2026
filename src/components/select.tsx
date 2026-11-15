@@ -1,6 +1,7 @@
 import { ChevronDown } from "lucide-react";
 import type { SelectHTMLAttributes } from "react";
-import type { UseFormRegister } from "react-hook-form";
+import type { FieldError, UseFormRegister } from "react-hook-form";
+import { FieldErrorMessage } from "./field-error";
 
 interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
     name: string
@@ -15,7 +16,7 @@ interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
     optionDefault: string
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     register?: UseFormRegister<any>
-    error?: unknown
+    error?: FieldError
 }
 
 export function Select({
@@ -44,6 +45,8 @@ export function Select({
             <div className="relative w-full">
                 <select
                     id={name}
+                    defaultValue=""
+                    aria-invalid={!!error}
                     {...rest}
                     {...(register ? register(name) : {})}
                     className= {`
@@ -57,7 +60,8 @@ export function Select({
                         pr-10
                         font-poppins-regular
                         text-base
-                        text-text-input
+                        text-text-base
+                        has-[option[value='']:checked]:text-text-input
                         ${error ? "border-red-500" : "border-gray-lines-in-white"}
                         border
                         appearance-none
@@ -66,7 +70,6 @@ export function Select({
                     <option
                         value=""
                         disabled
-                        selected
                         hidden
                         className="font-poppins-regular text-base text-text-input"
                     >
@@ -86,6 +89,7 @@ export function Select({
                 </select>
                 <ChevronDown className="w-5 h-5 absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 pointer-events-none" />
             </div>
+            <FieldErrorMessage message={error?.message} />
         </>
     )
 }

@@ -1,5 +1,6 @@
 import type { TextareaHTMLAttributes } from "react"
-import type { UseFormRegister } from "react-hook-form"
+import type { FieldError, UseFormRegister } from "react-hook-form"
+import { FieldErrorMessage } from "./field-error"
 
 interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
     name: string
@@ -9,7 +10,7 @@ interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
     spanLabel?: string
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     register?: UseFormRegister<any>
-    error?: unknown
+    error?: FieldError
 }
 
 
@@ -38,6 +39,7 @@ export function TextArea({
             <div className="relative w-full">
             <textarea
                 id={name}
+                aria-invalid={!!error}
                 {...(register ? register(name) : {})}
                 { ...rest }
                 className={
@@ -59,6 +61,7 @@ export function TextArea({
             />
             <span className="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-[90%] h-[2px] bg-purple scale-x-0 transition-transform duration-300 peer-focus:scale-x-100"></span>
             </div>
+            <FieldErrorMessage message={error?.message} />
         </>
         
     )

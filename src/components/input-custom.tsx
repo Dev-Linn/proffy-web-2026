@@ -1,4 +1,6 @@
 import type { InputHTMLAttributes } from "react";
+import type { FieldError } from "react-hook-form";
+import { FieldErrorMessage } from "./field-error";
 
 interface InputCustomProps extends InputHTMLAttributes<HTMLInputElement> {
     name: string
@@ -6,9 +8,10 @@ interface InputCustomProps extends InputHTMLAttributes<HTMLInputElement> {
     labelColor?: "text-text-purple-base" | "text-text-complement"
     bgColor?: "bg-white" | "bg-white-shape"
     spanLabel?: string
+    prefix?: string
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     register?: any
-    error?: unknown
+    error?: FieldError
 }
 
 export function InputCustom({
@@ -17,6 +20,7 @@ export function InputCustom({
     labelColor = "text-text-purple-base",
     bgColor = "bg-white",
     spanLabel,
+    prefix,
     register,
     error,
     ...rest
@@ -34,8 +38,15 @@ export function InputCustom({
                 }
             </label>
             <div className="relative w-full">
+                {
+                    prefix &&
+                    <span className="absolute left-6 top-1/2 -translate-y-1/2 font-poppins-regular text-base text-text-base pointer-events-none">
+                        {prefix}
+                    </span>
+                }
                 <input
                     id={ name }
+                    aria-invalid={!!error}
                     {...(register ? register(name) : {})}
                     {...rest}
                     className={`
@@ -44,10 +55,11 @@ export function InputCustom({
                         ${bgColor}
                         rounded-lg
                         focus:outline-hidden
-                        ps-6
+                        ${prefix ? "ps-14" : "ps-6"}
                         font-poppins-regular
                         text-base
-                        text-text-input
+                        text-text-base
+                        placeholder:text-text-input
                         ${error ? "border-red-500" : "border-gray-lines-in-white"}
                         border
                         pr-2
@@ -55,6 +67,7 @@ export function InputCustom({
                 />
                 <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[90%] h-[2px] bg-purple scale-x-0 transition-transform duration-300 peer-focus:scale-x-100"></span>
             </div>
+            <FieldErrorMessage message={error?.message} />
         </>
     )
 }
