@@ -1,24 +1,14 @@
-import { Link } from "react-router"
-
-import goBack from '../../assets/goback.svg'
-import proffyLogo from '../../assets/proffy-logo.svg'
 import foundIcon from '../../assets/found-icon.svg'
+import { PageHeader } from "../../components/page-header"
 import { Select } from "../../components/select"
 import { InputCustom } from "../../components/input-custom"
 import { TeacherItem } from "../../components/teacher-item"
+import { subjectOptions, weekDayOptions } from "../../data/options"
 
 export function TeacherList() {
     return (
         <div className="w-full min-h-screen items-center flex flex-col align-top bg-background antialiased">
-            <div className="w-full flex flex-row justify-center items-center bg-dark-purple h-16">
-               <header className="flex justify-between items-center min-w-7xl">
-                    <Link to={"/"}>
-                        <img src={goBack} alt="" className="w-8 h-12" />
-                    </Link>
-                    <h1 className="text-text-purple-base font-archivo-semibold text-base">Estudar</h1>
-                    <img src={ proffyLogo } alt="" className="w-12 h-4" />
-               </header>
-            </div>
+            <PageHeader title="Estudar" />
             <div className="w-full flex flex-col items-center bg-purple h-64">
                 <div className="flex justify-between items-center min-w-4xl mt-16">
                     <h1 className="font-archivo-bold text-4xl text-white">
@@ -38,18 +28,7 @@ export function TeacherList() {
                                 name="subject"
                                 optionDefault="Selecione"
                                 bgColor="bg-white-shape"
-                                options={[
-                                    { value: "Artes", label: "Artes" },
-                                    { value: "Biologia", label: "Biologia" },
-                                    { value: "Ciências", label: "Ciências" },
-                                    { value: "Educação física", label: "Educação física" },
-                                    { value: "Física", label: "Física" },
-                                    { value: "Geografia", label: "Geografia" },
-                                    { value: "História", label: "História" },
-                                    { value: "Matématica", label: "Matématica" },
-                                    { value: "Português", label: "Português" },
-                                    { value: "Química", label: "Química" }
-                                ]}
+                                options={subjectOptions}
                             />
                         </div>
                         <div className="flex flex-col w-[17rem]">
@@ -58,15 +37,7 @@ export function TeacherList() {
                                 name="week_day"
                                 optionDefault="Selecione"
                                 bgColor="bg-white-shape"
-                                options={[
-                                    { value: "0", label: "Domingo" },
-                                    { value: "1", label: "Segunda" },
-                                    { value: "2", label: "Terça" },
-                                    { value: "3", label: "Quarta" },
-                                    { value: "4", label: "Quinta" },
-                                    { value: "5", label: "Sexta" },
-                                    { value: "6", label: "Sábado" }
-                                ]}
+                                options={weekDayOptions}
                             />
                         </div>
                         <div className="flex flex-col w-[17rem]">
